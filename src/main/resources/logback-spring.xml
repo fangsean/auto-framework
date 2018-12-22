@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!-- 1.想使用spring扩展profile支持，必须要以logback-spring.xml命名 -->
+    <!-- https://github.com/spring-projects/spring-boot/blob/v1.4.2.RELEASE/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
+    <!--<include resource="logback-default.xml"/>-->
+    <!--2.使用 logback-spring.xml 2.使用springProperty才能使用application.properties中的变量 3.以下没起作用-->
+    <!--<springProperty scope="context" name="BASELOG_LOGGING_LEVEL" source="${baselog.logging.level}"/>
+    <springProperty scope="context" name="APP_NAME" source="${app.name}"/>-->
+    <property name="APP_NAME" value="auto-frame"/>
+    <property name="BASELOG_LOGGING_LEVEL" value="DEBUG"/>
+    <property name="TIME_FILTER_LOGGER_LEVEL" value="DEBUG"/>
+
+
+    <!--<property name="APP_NAME" value="${APP_NAME}" />-->
+    <property name="LOG_PATH" value="${user.home}/${APP_NAME}/logs"/>
+    <property name="LOG_FILE" value="${LOG_PATH}/${APP_NAME}.log"/>
+
+
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 控制台输出 -->
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </encoder>
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <appender name="basicLogger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/basic.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/archive/basic-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d][%t] %p %c:%line - %m %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="timeFilterLogger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/time-filter-log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/archive/time-filter-log-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d][%t] %p %c:%line - %m %n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 开发,测试环境-->
+    <springProfile name="dev">
+        <root level="${BASELOG_LOGGING_LEVEL}" additivity="false">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="basicLogger"/>
+        </root>
+        <logger name="timeFilterLogger" level="${TIME_FILTER_LOGGER_LEVEL}" additivity="false">
+            <appender-ref ref="timeFilterLogger"/>
+        </logger>
+        <logger name="com.alibaba.dubbo.registry.zookeeper" level="WARN">
+            <appender-ref ref="basicLogger"/>
+        </logger>
+    </springProfile>
+
+    <!-- 线上环境-->
+    <springProfile name="test,prod,pre">
+        <root level="${BASELOG_LOGGING_LEVEL}" additivity="false">
+            <appender-ref ref="basicLogger"/>
+        </root>
+        <logger name="basicLog" level="${BASELOG_LOGGING_LEVEL}" additivity="false">
+            <appender-ref ref="basicLogger"/>
+        </logger>
+        <logger name="timeFilterLogger" level="${TIME_FILTER_LOGGER_LEVEL}" additivity="false">
+            <appender-ref ref="timeFilterLogger"/>
+        </logger>
+        <logger name="com.alibaba.dubbo.registry.zookeeper" level="WARN">
+            <appender-ref ref="basicLogger"/>
+        </logger>
+    </springProfile>
+
+    <springProfile>
+        <root level="${BASELOG_LOGGING_LEVEL}" additivity="false">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="basicLogger"/>
+        </root>
+        <logger name="timeFilterLogger" level="${TIME_FILTER_LOGGER_LEVEL}" additivity="false">
+            <appender-ref ref="timeFilterLogger"/>
+        </logger>
+        <logger name="com.auto.*" level="DEBUG">
+            <appender-ref ref="basicLogger"/>
+        </logger>
+    </springProfile>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="basicLogger" />
+        <appender-ref ref="timeFilterLogger" />
+    </root>
+
+</configuration>  

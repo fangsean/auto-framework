@@ -1,7 +1,9 @@
-package com.auto.api;
+package com.auto.util;
+
+import com.auto.common.adapter.UseCase;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * 2018-06-19
  * @Description: <p></p>
  */

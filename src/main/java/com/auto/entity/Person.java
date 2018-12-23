@@ -3,7 +3,7 @@ package com.auto.entity;
 import lombok.Data;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * 2018-10-18
  * @Description: <p></p>
  */

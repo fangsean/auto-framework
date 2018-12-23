@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author auto.yin<auto.yin   @   gmail.com>
+ * @author jsen.yin<jsen.yin   @   gmail.com>
  * 2018-06-28
  * @Description: <p></p>
  */

@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * @Description:
  * <p>通过调用workqueue工作队列就能创建内核线程</p>
  */

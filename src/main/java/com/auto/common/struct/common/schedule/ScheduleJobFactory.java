@@ -8,7 +8,7 @@ import org.springframework.scheduling.quartz.AdaptableJobFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * @Description: <p></p>
  */
 @Component

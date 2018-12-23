@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * 2018-07-02
  * @Description: <p></p>
  */

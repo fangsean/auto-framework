@@ -1,7 +1,7 @@
 package com.auto.service.impl;
 
-import com.auto.api.DateAdapter;
-import com.auto.api.Flector;
+import com.auto.common.adapter.DateAdapter;
+import com.auto.util.Flector;
 import com.auto.service.SolrContext;
 import com.auto.util.EasyResult;
 import org.apache.commons.lang3.StringUtils;

@@ -6,7 +6,7 @@ package com.auto.entity;
  * @Description: <p></p>
  */
 
-import com.auto.api.DateAdapter;
+import com.auto.common.adapter.DateAdapter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 /**
- * @author auto.yin<auto.yin@gmail.com>
+ * @author jsen.yin<jsen.yin@gmail.com>
  * 2018-06-28
  * @Description:
  * <p>

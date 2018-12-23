@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * @Description: <p></p>
  */
 @Configuration

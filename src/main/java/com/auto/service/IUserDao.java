@@ -1,7 +1,7 @@
 package com.auto.service;
 
 /**
- * @author auto.yin<auto.yin   @   gmail.com>
+ * @author jsen.yin<jsen.yin   @   gmail.com>
  * 2018-07-02
  * @Description: <p></p>
  */

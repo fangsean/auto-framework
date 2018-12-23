@@ -1,9 +1,7 @@
 package com.auto.algorithm.random;
 
 
-import com.auto.api.Flector;
-import com.auto.entity.RewardPrize;
-import com.auto.api.Flector;
+import com.auto.util.Flector;
 import com.auto.entity.RewardPrize;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;

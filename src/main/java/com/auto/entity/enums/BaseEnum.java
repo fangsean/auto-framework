@@ -1,4 +1,4 @@
-package com.auto.enums;
+package com.auto.entity.enums;
 
 public enum BaseEnum {
 

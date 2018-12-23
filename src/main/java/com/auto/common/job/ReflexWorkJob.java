@@ -5,7 +5,7 @@ import com.auto.common.struct.IWorkJob;
 import java.lang.reflect.Method;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * @Description: <p></p>
  */
 public class ReflexWorkJob implements IWorkJob {

@@ -1,9 +1,9 @@
 package com.auto.web;
 
-import com.auto.base.abstracts.BaseController;
+import com.auto.web.abstracts.BaseController;
 import com.auto.concurrence.conf.ThreadAsyncConfigurer;
 import com.auto.concurrence.semaphore.RequestHolder;
-import com.auto.enums.BaseEnum;
+import com.auto.entity.enums.BaseEnum;
 import com.auto.util.FinalResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,7 +8,7 @@ package com.auto.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.auto.api.DoubleAdapter;
+import com.auto.common.adapter.DoubleAdapter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

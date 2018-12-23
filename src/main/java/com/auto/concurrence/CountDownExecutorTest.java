@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author auto.yin<auto.yin@gmail.com>
+ * @author jsen.yin<jsen.yin@gmail.com>
  * 2018-06-28
  * @Description: <p></p>
  */

@@ -3,7 +3,7 @@ package com.auto.common.job;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author auto.yin<auto.yin @ gmail.com>
+ * @author jsen.yin<jsen.yin @ gmail.com>
  * @Description: <p></p>
  */
 @Slf4j

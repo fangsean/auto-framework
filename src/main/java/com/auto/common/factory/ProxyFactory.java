@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * @author auto.yin<auto.yin   @   gmail.com>
+ * @author jsen.yin<jsen.yin   @   gmail.com>
  * 2018-07-02
  * @Description: <p></p>
  */

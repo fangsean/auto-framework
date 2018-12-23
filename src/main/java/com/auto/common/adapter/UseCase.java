@@ -1,4 +1,4 @@
-package com.auto.api;
+package com.auto.common.adapter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author auto.yin<auto.yin@gmail.com>
+ * @author jsen.yin<jsen.yin@gmail.com>
  * 2018-06-19
  * @Description:
  * <p>

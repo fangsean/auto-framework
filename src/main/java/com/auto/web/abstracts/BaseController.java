@@ -1,7 +1,7 @@
-package com.auto.base.abstracts;
+package com.auto.web.abstracts;
 
 
-import com.auto.dto.ShiroUser;
+import com.auto.entity.dto.ShiroUser;
 import com.auto.util.FinalResult;
 import com.auto.util.StringEscapeEditor;
 import com.auto.util.URLUtils;

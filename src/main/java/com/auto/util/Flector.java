@@ -1,4 +1,4 @@
-package com.auto.api;
+package com.auto.util;
 
 import com.auto.entity.Person;
 import org.apache.commons.collections.CollectionUtils;

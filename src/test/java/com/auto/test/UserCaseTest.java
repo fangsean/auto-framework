@@ -1,5 +1,7 @@
-package com.auto.api;
+package com.auto.test;
 
+import com.auto.util.PasswordUtils;
+import com.auto.common.adapter.UseCase;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
@@ -9,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author auto.yin<auto.yin@gmail.com>
+ * @author jsen.yin<jsen.yin@gmail.com>
  * 2018-06-19
  * @Description: <p></p>
  */

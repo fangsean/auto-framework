@@ -1,4 +1,4 @@
-package com.auto.api;
+package com.auto.common.adapter;
 
 /**
  * @author auto.yin[auto.yin@gmail.com]

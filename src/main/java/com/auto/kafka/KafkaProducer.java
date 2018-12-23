@@ -1,7 +1,7 @@
 package com.auto.kafka;
 
 import com.alibaba.fastjson.JSONObject;
-import com.auto.dto.OrderDTO;
+import com.auto.entity.dto.OrderDTO;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;

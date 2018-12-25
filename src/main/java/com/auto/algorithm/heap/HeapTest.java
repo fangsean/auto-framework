@@ -20,9 +20,7 @@ public class HeapTest {
             size--;
             //构造大根堆
             heapify(arr, 0, size);
-
         }
-
     }
 
     //构造大根堆（通过新插入的数上升）

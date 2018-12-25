@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**
- * @author jsen.yin<jsen.yin               @               gmail.com>
+ * @author jsen.yin[jsen.yin@gmail.com]
  * 2018-07-02
  * @Description: <p></p>
  */
@@ -43,11 +43,25 @@ public class Test {
         ServiceLoader<DNSNameServiceDescriptor> load = ServiceLoader.load(service);
 
         Iterator<DNSNameServiceDescriptor> iterator = load.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             DNSNameServiceDescriptor next = iterator.next();
             System.out.println(next.getProviderName());
         }
     }
 
+
+    /* * Returns index for hash code h. */
+    static int indexFor(int h, int length) {
+        assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
+        return h & (length - 1);
+    }
+
+    @org.junit.Test
+    public void test() {
+        int[] table = new int[10];
+        int i = indexFor(2, 8);
+        System.out.println(i);
+
+    }
 
 }

@@ -1,5 +1,8 @@
-package com.auto.concurrence.lock;
+package com.auto.test;
 
+
+import com.auto.concurrence.lock.BooleanLock;
+import com.auto.concurrence.lock.Lock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;

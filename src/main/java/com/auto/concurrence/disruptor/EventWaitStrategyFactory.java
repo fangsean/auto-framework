@@ -11,7 +11,7 @@ import com.lmax.disruptor.YieldingWaitStrategy;
  * @Description:
  * <p>每种策略都具有不同性能和优缺点，根据实际运行环境的 CPU 的硬件特点选择恰当的策略，并配合特定的 JVM 的配置参数，能够实现不同的性能提升</p>
  */
-public class EventWaitStrategy {
+public class EventWaitStrategyFactory {
 
     //最低效的策略，但其对CPU的消耗最小并且在各种不同部署环境中能提供更加一致的性能表现
     private static WaitStrategy BLOCKING_WAIT = new BlockingWaitStrategy();

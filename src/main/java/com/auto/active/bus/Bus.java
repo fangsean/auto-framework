@@ -7,7 +7,5 @@ package com.auto.active.bus;
  */
 public interface Bus {
 
-    void
-
 
 }

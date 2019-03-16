@@ -1,6 +1,6 @@
 package com.auto.algorithm.heap;
 
-import com.auto.algorithm.topk.HeapTopK;
+import com.auto.algorithm.topk.SortTopK;
 
 /**
  * @author jsen.yin [jsen.yin@gmail.com]
@@ -113,9 +113,9 @@ public class HeapTest {
     public static void main(String[] args) {
         int[] data = {49, 38, 29, 65, 97, 76, 13, 27, 49, 22, 19};
         HeapTest heap = new HeapTest();
-        HeapTopK.display(data);
+        SortTopK.display(data);
         heap.heapSort(data);
-        HeapTopK.display(data);
+        SortTopK.display(data);
     }
 
 

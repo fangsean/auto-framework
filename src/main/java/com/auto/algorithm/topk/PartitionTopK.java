@@ -56,7 +56,8 @@ public class PartitionTopK {
 
     public static void main(String args[]) {
         int k = 3;
-        int a[] = {49, 38, 29, 65, 97, 76, 13, 27, 49, 22, 19};
+        int[] a = {1, 1, 1, 2, 2, 3, 5, 5, 5, 3};
+
         if (k > 0 && k <= a.length - 1) {
             selectK(a, 0, a.length - 1, k);
             display(a, k);

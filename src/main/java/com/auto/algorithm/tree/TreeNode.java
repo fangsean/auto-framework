@@ -1,14 +1,21 @@
 package com.auto.algorithm.tree;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Description: <p>树节点对象</p>
  */
 @Slf4j
+@Data
 public class TreeNode<T> {
 
     T value;
+
+    TreeNode<T> parent;
     /**
      * 左孩子
      */
@@ -18,11 +25,10 @@ public class TreeNode<T> {
      */
     TreeNode<T> rightChild;
 
-
-    public TreeNode() {
+    TreeNode() {
     }
 
-    public TreeNode(T value) {
+    TreeNode(T value) {
         this.value = value;
     }
 
@@ -30,6 +36,12 @@ public class TreeNode<T> {
         this.value = value;
         this.leftChild = left;
         this.rightChild = right;
+        if (null != this.leftChild) {
+            this.leftChild.parent = this;
+        }
+        if (null != this.rightChild) {
+            this.rightChild.parent = this;
+        }
     }
 
     public final T setValue(T newValue) {

@@ -1,116 +1,41 @@
 package com.auto.algorithm.topk;
 
+import com.auto.algorithm.stack.LinkedStack;
+
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 /**
- * @author jsen.yin [jsen.yin@gmail.com]
- * 2018-12-23
- * @Description: <p>最优\最快topk</p>
- * https://blog.csdn.net/u010452388/article/details/81283998
+ * @author jsen.yin[jsen.yin@gmail.com]
+ * 2019-03-13
+ * @Description: <p></p>
  */
 public class HeapTopK {
 
-    /**
-     * @param n
-     * @return
-     */
-    private int parent(int n) {
-        return (n - 1) >> 1;
-    }
+    public static int[] topK(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(k);//队列默认自然顺序排列,小顶堆,不必重写compare
 
-    /**
-     * @param n
-     * @return
-     */
-    private int left(int n) {
-        return n << 1 + 1;
-    }
-
-    /**
-     * @param n
-     * @return
-     */
-    private int right(int n) {
-        return left(n) + 1;
-    }
-
-    private void swap(int[] data, int a, int b) {
-        int tmp;
-        tmp = data[a];
-        data[a] = data[b];
-        data[b] = tmp;
-    }
-
-    /**
-     * @param data
-     * @param n
-     */
-    private void buildHeap(int[] data, int n) {
-        for (int i = 1; i < n; i++) {
-            int t = i;
-            while (t != 0 && data[parent(t)] > data[t]) {
-                swap(data, t, parent(t));
-                t = parent(t);
+        for (int num : nums) {
+            if (pq.size() < k) {
+                pq.offer(num);
+            } else if (pq.peek() < num) {//如果堆顶元素 < 新数,则删除堆顶,加入新数入堆
+                pq.poll();
+                pq.offer(num);
             }
         }
-    }
-
-    private void adjustHeap(int[] data, int i, int n) {
-
-        if (data[i] <= data[0]) {
-            return;
+        int[] result = new int[k];
+        for (int i = 0; i < k&&!pq.isEmpty(); i++) {
+            result[i] = pq.poll();
         }
-
-        //swap
-        swap(data, i, 0);
-
-        //adjust
-        int t = 0;
-        //big root heap
-        while (left(t) < n && data[t] > data[left(t)] || (right(t) < n && data[t] > data[right(t)])) {
-            if (right(t) < n && data[right(t)] < data[left(t)]) {
-                swap(data, t, right(t));
-                t = right(t);
-            } else {
-                swap(data, t, left(t));
-                t = left(t);
-            }
-        }
-        //small root heap
-    }
-
-    public void queryTopk(int[] data, int n) {
-
-        buildHeap(data, n);
-
-        for (int i = n; i < data.length; i++) {
-            adjustHeap(data, i, n);
-        }
-
-    }
-
-    public static void display(int[] data) {
-        for (int i = 0; i < data.length; i++) {
-            System.out.print(data[i] + " ");
-        }
-        System.out.println("\r\n");
+        return result;
     }
 
 
     public static void main(String[] args) {
-
-        HeapTopK top = new HeapTopK();
-
-        int k = 3;
-        int data[] = {3,6,8,5,7};
-
-        display(data);
-
-        if (k > 0 && k <= data.length - 1) {
-            top.queryTopk(data, data.length -1);
-            display(data);
-        } else {
-            System.out.println("Are You Kidding Me?");
-        }
+        int[] nums = {4,5,1,6,2,7,3,8};
+        System.out.println(Arrays.toString(topK(nums, 3)));
 
     }
+
 
 }

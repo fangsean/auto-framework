@@ -8,16 +8,22 @@ public class DataCount {
 
         count = 0;
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
             Thread thread = new Thread(() -> {
                 count++;
+//                if (finalI == 2){
+                Thread.yield();
+//                }
+                System.out.println(finalI);
             });
+//            thread.setPriority(10);
             thread.start();
-            try {
+            /*try {
                 thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
         Thread thread = new Thread(() -> {
@@ -35,7 +41,7 @@ public class DataCount {
             e.printStackTrace();
         }
 
-        new Thread(()->{
+        new Thread(() -> {
             System.out.println("============");
         }).start();
 

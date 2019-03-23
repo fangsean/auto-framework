@@ -8,6 +8,7 @@ import com.auto.entity.enums.AgeEnum;
 import com.auto.entity.enums.PhoneEnum;
 import com.auto.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import java.util.Date;
  * <p>
  * /mybatis-plus/src/test/java/com/baomidou/mybatisplus/test/generator/MysqlGenerator.java
  */
+@Scope(value ="prototype" )
 @RestController
 @RequestMapping("/user")
 public class UserController /*extends ApiController*/ {

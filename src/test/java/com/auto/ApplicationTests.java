@@ -31,14 +31,14 @@ public class ApplicationTests {
 
         /*Executor*/
         ThreadPoolTaskExecutor executor = (ThreadPoolTaskExecutor) configurer.getAsyncExecutor();
-        /*for (int i = 0; i <= 100; i++) {
-            executor.execute(() -> {
-                atomicObject.getAndIncrement();
-                atomicInteger.getAndIncrement();
+        for (int i = 0; i <= 100; i++) {
+            executor.submit(() -> {
+                System.out.println(atomicObject.getAndIncrement());
+                System.out.println(atomicInteger.getAndIncrement());
             });
-        }*/
+        }
 
-        executor.execute(() -> {
+        executor.submit(() -> {
             for (int i = 0; i < 100; i++) {
                 int stamp = number.getStamp();
                 Integer reference = number.getReference();
@@ -55,13 +55,13 @@ public class ApplicationTests {
             }
         });
 
-        executor.execute(() -> {
+        executor.submit(() -> {
             for (int i = 0; i < 100; i++) {
                 while (true) {
                     int timestamp = number.getStamp();
                     Integer reference = number.getReference();
                     if (reference > 10) {
-                        if (number.compareAndSet(reference, reference - 10, timestamp,timestamp + 1)) {
+                        if (number.compareAndSet(reference, reference - 10, timestamp, timestamp + 1)) {
                             System.out.println("消费10元，余额:" + number.getReference());
                             break;
                         }

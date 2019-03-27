@@ -1,5 +1,7 @@
 package com.auto.test;
 
+import com.auto.concurrence.atomic.AtomicObject;
+
 public class DataCount {
 
     private static /*volatile*/ int count;
@@ -7,6 +9,8 @@ public class DataCount {
     public static void main(String[] args) {
 
         count = 0;
+        AtomicObject atomicObject = new AtomicObject();
+
 
         for (int i = 0; i < 10; i++) {
             int finalI = i;
@@ -16,6 +20,7 @@ public class DataCount {
                 Thread.yield();
 //                }
                 System.out.println(finalI);
+                atomicObject.getAndIncrement();
             });
 //            thread.setPriority(10);
             thread.start();
@@ -33,6 +38,7 @@ public class DataCount {
                 e.printStackTrace();
             }
             System.out.println(count);
+            System.out.println(atomicObject.get());
         });
         thread.start();
         try {

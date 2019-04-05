@@ -13,18 +13,20 @@ public class SQA {
      * @param right 末端坐标
      */
     public void qKSort(int[] arr, int left, int right) {
-        if (left >= right || arr.length == 0) {
+        if (arr.length == 0 || left >= right) {
             return;
         }
 
-        int i = left, j = right, side = (i + j) >> 1, pro = arr[side];
+        int i = left, j = right, side = (i + j) >> 1;
+        int middle = arr[side];
+
         while (i < j) {
 
-            while (arr[i] < pro) {
+            while (arr[i] < middle) {
                 i++;
             }
 
-            while (arr[j] > pro) {
+            while (arr[j] > middle) {
                 j--;
             }
 

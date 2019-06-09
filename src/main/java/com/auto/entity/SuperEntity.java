@@ -2,12 +2,15 @@ package com.auto.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
+import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 演示实体父类
  */
+@Builder
 public class SuperEntity<T extends Model> extends Model<T> {
 
     /**

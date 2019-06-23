@@ -22,6 +22,28 @@ spring:
     platform: h2
     initialization-mode: always
     continue-on-error: true
+#  datasource:
+#    name: dataSource
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://192.168.202.17:3306/auth_service?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false
+#      username: root
+#      password: 123456
+#      filters: stat,wall,log4j,config
+#      max-active: 100
+#      initial-size: 1
+#      max-wait: 60000
+#      min-idle: 1
+#      time-between-eviction-runs-millis: 60000
+#      min-evictable-idle-time-millis: 300000
+#      validation-query: select 'x'
+#      test-while-idle: true
+#      test-on-borrow: false
+#      test-on-return: false
+#      pool-prepared-statements: true
+#      max-open-prepared-statements: 50
+#      max-pool-prepared-statement-per-connection-size: 20
   h2:
     console:
       enabled: true
@@ -99,3 +121,11 @@ jedis:
       # key expire time,timeunit: milliseconds , default value: 300s
       expire:
         timeout: 300000
+
+service:
+  properties:
+    msg: aaaaaaaaaaaaa
+    name: my-test-name
+    ip: 192.168.1.1
+  user: kayle
+  port: 8080

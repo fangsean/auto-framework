@@ -18,10 +18,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface Af {
 
-    @AliasFor("value")
+    @AliasFor("attribute")
     String value() default "";
 
-    @AliasFor("attribute")
+    @AliasFor("value")
     String attribute() default "";
 
 

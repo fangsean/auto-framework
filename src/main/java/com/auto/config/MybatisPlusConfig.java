@@ -1,5 +1,6 @@
 package com.auto.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.incrementer.H2KeyGenerator;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
@@ -9,15 +10,26 @@ import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-//@MapperScan("com.auto.mapper*")//这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
-public class MybatisPlusConfig {
+// 这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
+//@MapperScan("com.auto.mapper*")
+public class MybatisPlusConfig /*implements TransactionManagementConfigurer */{
+
+
+    @Autowired
+    private DruidDataSource dataSource;
 
     /**
      * mybatis-plus分页插件<br>
@@ -91,7 +103,16 @@ public class MybatisPlusConfig {
      * 性能分析拦截器，不建议生产使用
      */
     @Bean
-    public PerformanceInterceptor performanceInterceptor(){
-        return new PerformanceInterceptor();
+    @Profile({"local", "dev", "test"})
+    public PerformanceInterceptor performanceInterceptor() {
+        PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+        performanceInterceptor.setMaxTime(1000);
+        performanceInterceptor.setFormat(true);
+        return performanceInterceptor;
     }
+
+    /*@Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return new DataSourceTransactionManager(*//*dataSource*//*);
+    }*/
 }

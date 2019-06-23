@@ -11,10 +11,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface ParamsWapper {
 
-    @AliasFor("key")
+    @AliasFor("value")
     String key() default "";
 
-    @AliasFor("value")
+    @AliasFor("key")
     String value() default "";
 
     Autowire setParams() default Autowire.NO;

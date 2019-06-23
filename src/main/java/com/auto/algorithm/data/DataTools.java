@@ -18,7 +18,7 @@ public class DataTools {
 
     public static final String SEPARATOR_FIELD = "#";
     public static final String CONNECTOR_KV = "=";
-    public static final String SEPARATOR_REG = "\\,";
+    public static final String SEPARATOR_REG = ",";
     public static final String CONTENT_NULL = "null";
     public static final String CONTENT_CHILDREN = "content";
 
@@ -27,24 +27,24 @@ public class DataTools {
      *
      * @param list    List beans
      * @param keyName 需要归类的bean的属性名称
-     * @return LinkedHashMap<String, List>,有顺序的map<br>
-     * map的key为需要归类的bean的属性名+"#"+对应的属性值：eg："class#312"<br>
-     * value为List<bean><br>
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
+     * @return LinkedHashMap<String, List>,有顺序的map，map的key为需要归类的bean的属性名+"="+对应的属性值：eg："key=value"，value为List<bean>
      */
 
-    public static <T> LinkedHashMap<String, List<T>> groupClassify(List<T> list, String keyName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static <T> LinkedHashMap<String, List<T>> groupClassify(List<T> list, String keyName) {
         LinkedHashMap<String, List<T>> target = new LinkedHashMap();
 
         String[] keyNames = keyName.split(SEPARATOR_REG);
 
         for (T obj : list) {
             // 取得bean需要归类的属性（keyName）的值，不做类型转换
-            StringBuffer keyValueBf = new StringBuffer();
+            StringBuilder keyValueBf = new StringBuilder();
             for (String key : keyNames) {
-                Object value = PropertyUtils.getProperty(obj, key);
+                Object value = null;
+                try {
+                    value = PropertyUtils.getProperty(obj, key);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
                 keyValueBf
                         .append(key)
                         .append(CONNECTOR_KV)
@@ -67,23 +67,14 @@ public class DataTools {
     }
 
     /**
-     * 将归类的Map<String, List>按照 keyName归类，并用index控制递归。<br>
-     * 因为直接调用没有意义，这个方法为private，
+     * 将归类的Map<String, List>按照 keyName归类，并用index控制递归。
      *
-     * @param mocl     map of classified list<br>
-     *                 也就是运用方法<br>
-     *                 LinkedHashMap<String, List> groupClassify(List list, String
-     *                 keyName)<br>
-     *                 将list归类成的map<br>
+     * @param mocl     map of classified list，也就是运用方法 LinkedHashMap<String, List> groupClassify(List list, String keyName)，将list归类成的map
      * @param index    用条件 index < keyNames.length控制递归
      * @param keyNames 需要归类的bean的属性名称
      * @return
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
-
-    private static <T> LinkedHashMap<String, Map> groupClassify(Map<String, List<T>> mocl, int index, String... keyNames) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private static <T> LinkedHashMap<String, Map> groupClassify(Map<String, List<T>> mocl, int index, String... keyNames) {
         // 单步理解：target是函数参数Map<String, List> mocl再次归类成的LinkedHashMap<String,Map>
         // 递归到最后这个是最终归类好的map
         LinkedHashMap<String, Map> target = new LinkedHashMap();
@@ -93,18 +84,18 @@ public class DataTools {
             // 用它保证：在参数Map<String, List> mocl层面循环时用相同的index参数值。
             int swap = index;
             for (Map.Entry<String, List<T>> entry : mocl.entrySet()) {
-                String mocl_key = entry.getKey();
-                List<T> mocl_list = entry.getValue();
+                String moclKey = entry.getKey();
+                List<T> moclList = entry.getValue();
                 // 将List<bean>再次归类
-                LinkedHashMap<String, List<T>> $mocl = groupClassify(mocl_list, keyNames[index]);
+                LinkedHashMap<String, List<T>> mocl$ = groupClassify(moclList, keyNames[index]);
                 // 如果index达到了数组的最后一个，一定是List<bean>转map，递归结束
                 if (index == keyNames.length - 1) {
-                    target.put(mocl_key, $mocl);
+                    target.put(moclKey, mocl$);
                 } else {
                     // 将List<bean>转map得到的_mocl，再次归类
                     // mocm 为map of classified map的简称
-                    LinkedHashMap<String, Map> mocm = groupClassify($mocl, ++index, keyNames);
-                    target.put(mocl_key, mocm);
+                    LinkedHashMap<String, Map> mocm = groupClassify(mocl$, ++index, keyNames);
+                    target.put(moclKey, mocm);
                 }
                 index = swap;
             }
@@ -115,40 +106,32 @@ public class DataTools {
     /**
      * 将Map<String, List> map按照bean需要归类的属性名keyName归类
      *
-     * @param map     map of classified list<br>
-     *                list归类成的map
+     * @param map     map of classified list list归类成的map
      * @param keyName bean需要归类的属性名
      * @return
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
-    public static <T> LinkedHashMap<String, Map> groupClassifyMap(Map<String, List<T>> map, String keyName) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static <T> LinkedHashMap<String, Map> groupClassifyMap(Map<String, List<T>> map, String keyName) {
         LinkedHashMap<String, Map> target = new LinkedHashMap();
         for (Map.Entry<String, List<T>> entry : map.entrySet()) {
-            List map_list = entry.getValue();
-            String map_key = entry.getKey();
-            LinkedHashMap<String, List<T>> keyMap = groupClassify(map_list, keyName);
-            target.put(map_key, keyMap);
+            List mapList = entry.getValue();
+            String mapKey = entry.getKey();
+            LinkedHashMap<String, List<T>> keyMap = groupClassify(mapList, keyName);
+            target.put(mapKey, keyMap);
         }
         return target;
     }
 
     /**
-     * 将List<bean> 按照指定的bean的属性进行归类,keyNames的先后顺序会影响归类结果。<br>
+     * 将List<bean> 按照指定的bean的属性进行归类,keyNames的先后顺序会影响归类结果。
      * eg:一个学生列表，按照班级和性别归类<br>
-     * Map map = CollectionUtils.groupClassifyList(studentList, "classId","sex");<br>
+     * Map map = CollectionUtils.groupClassifyList(studentList, "classId","sex");
      *
      * @param list     List beans
      * @param keyNames 数组包含需要归类的bean的属性名称
-     * @return 归类的有顺序的树状map<br>
-     * map的key为需要归类的bean的属性名+"#"+对应的属性值：eg："class#312"<br>
+     * @return 归类的有顺序的树状map,eg："key1#key2"
      * map的值为List或者map
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
-    public static LinkedHashMap groupClassifyList(List list, String... keyNames) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static LinkedHashMap groupClassifyList(List list, String... keyNames) {
         if (keyNames == null || keyNames.length == 0) {
             return null;
         }
@@ -204,6 +187,7 @@ public class DataTools {
         for (Object obj : mocl) {
             if (obj instanceof List) {
                 LinkedList<Object> maps = transformList((List) obj, index);
+                content.addAll(maps);
             } else if (obj instanceof Map) {
                 LinkedList<Map> maps = transformMap((Map<String, Object>) obj, index);
                 content.addAll(maps);
@@ -233,16 +217,16 @@ public class DataTools {
         // swap用来保存参数index的值，这是最容易出错的一个地方
         // 用它保证：在参数Map<String, List> mocl层面循环时用相同的index参数值。
         index--;
-        for (String mocl_key : mocl.keySet()) {
-            Map<Object, Object> objectMap = str2Map(mocl_key);
+        for (String moclKey : mocl.keySet()) {
+            Map<Object, Object> objectMap = str2Map(moclKey);
             // 将List<bean>再次归类
-            Object object = mocl.get(mocl_key);
+            Object object = mocl.get(moclKey);
             if (object instanceof List) {
                 LinkedList<Object> maps = transformList((List) object, index);
                 objectMap.put(CONTENT_CHILDREN, maps);
                 objects.add(objectMap);
             } else if (object instanceof Map) {
-                LinkedList<Map> maps = transformMap((Map<String, Object>) mocl.get(mocl_key), index);
+                LinkedList<Map> maps = transformMap((Map<String, Object>) mocl.get(moclKey), index);
                 objectMap.put(CONTENT_CHILDREN, maps);
                 objects.add(objectMap);
             }
@@ -261,19 +245,19 @@ public class DataTools {
      */
     public static <T> LinkedList<Map> transform(Map<String, Object> mocl, int index) {
         LinkedList<Map> root = new LinkedList<>();
-        for (String mocl_key : mocl.keySet()) {
+        for (String moclKey : mocl.keySet()) {
             LinkedList<Map> objects = new LinkedList<>();
-            Map<Object, Object> objectMap = str2Map(mocl_key);
-            Object obj = mocl.get(mocl_key);
+            Map<Object, Object> objectMap = str2Map(moclKey);
+            Object obj = mocl.get(moclKey);
             if (obj instanceof String) {
                 Map map = str2Map((String) obj);
                 objects.add(map);
             } else if (obj instanceof List) {
-                LinkedList<Object> maps = transformList((List) obj, index);
+                LinkedList<Object> maps = transformList((List) obj, --index);
                 objectMap.put(CONTENT_CHILDREN, maps);
                 objects.add(objectMap);
             } else if (obj instanceof Map) {
-                LinkedList<Map> maps = transformMap((Map<String, Object>) obj, index);
+                LinkedList<Map> maps = transformMap((Map<String, Object>) obj, --index);
                 objects.addAll(maps);
             }
             objectMap.put(CONTENT_CHILDREN, objects);
@@ -286,19 +270,14 @@ public class DataTools {
     /**
      * 统一方法入口
      *
-     * @param mocl
-     * @param index
-     * @param keyNames
+     * @param mocl     处理集合
+     * @param index    层级
+     * @param keyNames 字段
      * @param <T>
      * @return
      */
     public static <T> LinkedList<Map> group(List mocl, int index, String... keyNames) {
-        LinkedHashMap linkedHashMap = null;
-        linkedHashMap = groupClassifyList(mocl, keyNames);
-        if (null != linkedHashMap) {
-            return transform(linkedHashMap, index);
-        }
-        return null;
+        return transform(groupClassifyList(mocl, keyNames), index);
     }
 
 
@@ -321,7 +300,7 @@ public class DataTools {
         objects.add(User.builder().id(1L).tenantId(2L).age(3).name("什么").phone("1351234567890").role(12L).testDate(new Date()).testType(2).build());
 
         // 最终分解的信息
-        LinkedList<Map> role = group(objects, 1, "id,tenantId,age,name,phone", "role", "testType,testDate");
+        LinkedList<Map> role = group(objects, 0, "id,tenantId,age,name,phone", "role", "testType,testDate");
         System.out.println(JsonUtils.toJson(role));
     }
 

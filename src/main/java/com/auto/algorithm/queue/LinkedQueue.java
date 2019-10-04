@@ -57,7 +57,7 @@ public class LinkedQueue<T> {
      * @param data
      * @return
      */
-    public boolean append(T data) {
+    public boolean add(T data) {
 
         Node<T> node = new Node<T>(data, null);
 
@@ -79,9 +79,11 @@ public class LinkedQueue<T> {
     /**
      * @return
      */
-    public Node<T> delete() {
+    public Node<T> poll() {
 
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
 
         Node<T> value = this.front;
         this.front = this.front.next;
@@ -96,7 +98,7 @@ public class LinkedQueue<T> {
      *
      * @param <T>
      */
-    static class Node<T> {
+    public static class Node<T> {
         private T value;
         private Node<T> next;
 
@@ -150,17 +152,17 @@ public class LinkedQueue<T> {
     public static void main(String[] args) {
 
         LinkedQueue<String> stringLinkedQueue = new LinkedQueue<>();
-        stringLinkedQueue.append("1111111111");
-        stringLinkedQueue.append("22222222222222");
-        stringLinkedQueue.append("2223333333333");
-        stringLinkedQueue.append("555555555555");
-        stringLinkedQueue.append("666666666");
-        stringLinkedQueue.append("444444444");
+        stringLinkedQueue.add("1111111111");
+        stringLinkedQueue.add("22222222222222");
+        stringLinkedQueue.add("2223333333333");
+        stringLinkedQueue.add("555555555555");
+        stringLinkedQueue.add("666666666");
+        stringLinkedQueue.add("444444444");
 
         Node<String> front = stringLinkedQueue.getFront();
         Node<String> rear = stringLinkedQueue.getRear();
         while (!stringLinkedQueue.isEmpty()) {
-            Node<String> delete = stringLinkedQueue.delete();
+            Node<String> delete = stringLinkedQueue.poll();
             boolean equals = delete.equals(front);
             boolean equals1 = delete.equals(rear);
             System.out.println(equals + "/" + equals1);

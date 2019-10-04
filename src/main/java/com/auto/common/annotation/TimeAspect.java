@@ -71,10 +71,10 @@
 //        StringBuffer buffer = new StringBuffer();
 //        Class<?> pointClass = point.getTarget().getClass();
 //        String pointMethod = point.getSignature().getName();
-//        buffer.append("Class: ")
-//                .append(pointClass.getName()).append("\r\n\t")
-//                .append("Method:")
-//                .append(point.getSignature().toString());
+//        buffer.add("Class: ")
+//                .add(pointClass.getName()).add("\r\n\t")
+//                .add("Method:")
+//                .add(point.getSignature().toString());
 //
 //        Object[] args = point.getArgs();
 //        if (ArrayUtils.isNotEmpty(args)) {

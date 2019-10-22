@@ -2,6 +2,7 @@ package com.auto.algorithm.data;
 
 import com.auto.entity.User;
 import com.auto.util.JsonUtils;
+import com.google.common.base.Splitter;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,11 +16,11 @@ import java.util.*;
  */
 public class DataTools {
 
-
     public static final String SEPARATOR_FIELD = "#";
     public static final String CONNECTOR_KV = "=";
     public static final String SEPARATOR_REG = ",";
     public static final String CONTENT_NULL = "null";
+    // 子数据key
     public static final String CONTENT_CHILDREN = "content";
 
     /**
@@ -32,25 +33,28 @@ public class DataTools {
 
     public static <T> LinkedHashMap<String, List<T>> groupClassify(List<T> list, String keyName) {
         LinkedHashMap<String, List<T>> target = new LinkedHashMap();
-
-        String[] keyNames = keyName.split(SEPARATOR_REG);
+        List<String> keyNames = Splitter.on(SEPARATOR_REG)
+                .trimResults()
+                .omitEmptyStrings()
+                .splitToList(keyName);
 
         for (T obj : list) {
             // 取得bean需要归类的属性（keyName）的值，不做类型转换
             StringBuilder keyValueBf = new StringBuilder();
-            for (String key : keyNames) {
+            keyNames.stream().forEach(key -> {
                 Object value = null;
                 try {
-                    value = PropertyUtils.getProperty(obj, key);
+                    value = Optional.ofNullable(PropertyUtils.getProperty(obj, key)).orElse("");
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
                 keyValueBf
                         .append(key)
                         .append(CONNECTOR_KV)
-                        .append(null == value ? "" : value)
+                        .append(value)
                         .append(SEPARATOR_FIELD);
-            }
+            });
+
             String keyValue = keyValueBf.deleteCharAt(keyValueBf.length() - 1).toString();
             if (!target.containsKey(keyValue)) {
                 // 如果map中没有归类key值，则添加key值和相应的list

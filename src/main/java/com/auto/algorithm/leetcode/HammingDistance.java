@@ -1,6 +1,4 @@
-package com.auto.leetcode;
-
-import java.math.BigDecimal;
+package com.auto.algorithm.leetcode;
 
 /**
  * Description:

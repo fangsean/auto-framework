@@ -1,4 +1,4 @@
-package com.auto.leetcode;
+package com.auto.algorithm.leetcode;
 
 import com.google.common.collect.Lists;
 

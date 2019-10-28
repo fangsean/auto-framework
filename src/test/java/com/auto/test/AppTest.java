@@ -1,5 +1,6 @@
 package com.auto.test;
 
+import org.springframework.core.io.ResourceLoader;
 import com.auto.common.annotation.Af;
 import com.auto.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,17 @@ import org.springframework.core.annotation.AnnotationUtils;
  */
 @Slf4j
 public class AppTest {
+
+    public static void main(String[] args) {
+
+        for (int i=0;i<10000000;i++){
+            new Thread(()->{
+                System.out.println(System.currentTimeMillis());
+            }).start();
+        }
+
+
+    }
 
     @Before
     public void test() {
@@ -32,8 +44,6 @@ public class AppTest {
     }
 
 
-
-
-    //10:22:26.875 [main] ERROR com.auto.test.AppTest - AliasForServiceImpl Annotation Af.value = [aa], Af.attribute = [bb]
+//10:22:26.875 [main] ERROR com.auto.test.AppTest - AliasForServiceImpl Annotation Af.value = [aa], Af.attribute = [bb]
 //10:23:15.393 [main] ERROR com.auto.test.AppTest - AliasForServiceImpl Annotation Af.value = [aa], Af.attribute = [bb]
 }

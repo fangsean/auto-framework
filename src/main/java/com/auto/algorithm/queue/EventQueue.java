@@ -30,7 +30,7 @@ public class EventQueue {
 
     public void offer(Event event) {
         synchronized (eventQueue) {
-            while (eventQueue.size() >= this.maxEvent) {
+            if (eventQueue.size() >= this.maxEvent) {
                 try {
                     System.err.println("the queue is full, waitting ...");
                     eventQueue.wait();
@@ -48,7 +48,7 @@ public class EventQueue {
 
     public Event take() {
         synchronized (eventQueue) {
-            while (eventQueue.isEmpty()) {
+            if (eventQueue.isEmpty()) {
                 System.err.println("the queue is null,waitting ...");
                 try {
                     eventQueue.wait();

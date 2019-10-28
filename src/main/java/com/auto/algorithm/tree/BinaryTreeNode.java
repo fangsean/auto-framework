@@ -276,6 +276,26 @@ public class BinaryTreeNode<T> {
         return Math.max(left, right) + 1;
     }
 
+    private TreeNode searchNode(T value) {
+        boolean solve = false;
+        TreeNode currentNode = this.root;
+
+        while (null != currentNode && !solve) {
+            if (value == currentNode.value) {
+                solve = true;
+            } else if (currentNode.compareTo(value) > 0) {
+                currentNode = currentNode.leftChild;
+            } else {
+                currentNode = currentNode.rightChild;
+            }
+        }
+        if (solve) {
+            return currentNode;
+        }
+        return null;
+    }
+
+
     public static void main(String[] args) {
 
         BinaryTreeNode binTree = new BinaryTreeNode();
@@ -303,6 +323,9 @@ public class BinaryTreeNode<T> {
         System.out.println();
         TreeNode treeNode = binTree.findTreeNode(10);
         System.out.println(treeNode.toString());
+
+        TreeNode treeNode1 = binTree.searchNode(10);
+        System.out.println(treeNode1.value);
 
         /***
          前序遍历:

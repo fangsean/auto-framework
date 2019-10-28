@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.net.spi.nameservice.dns.DNSNameServiceDescriptor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
@@ -58,9 +60,8 @@ public class Test {
 
     @org.junit.Test
     public void test() {
-        int[] table = new int[10];
-        int i = indexFor(2, 8);
-        System.out.println(i);
+        String format = new SimpleDateFormat("YYYY-MM-DD 14:59:59").format(new Date());
+        System.out.println(format);
 
     }
 

@@ -2,8 +2,6 @@ package com.auto.algorithm.queue;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -15,9 +13,6 @@ import java.util.Arrays;
 @Data
 final
 public class RoundRobinQueue<T> {
-
-    protected final static Logger log = LoggerFactory.getLogger(RoundRobinQueue.class);
-
 
     /**
      * 定义队列长度

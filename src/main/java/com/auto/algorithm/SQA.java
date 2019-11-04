@@ -17,7 +17,7 @@ public class SQA {
             return;
         }
 
-        int i = left, j = right, side = (i + j) >> 1;
+        int i = left, j = right, side = i + (j-i) >> 1;
         int middle = arr[side];
 
         while (i < j) {

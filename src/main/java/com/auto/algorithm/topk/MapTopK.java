@@ -19,9 +19,7 @@ public class MapTopK {
             }
         }
         //按照get出来的元素对应的次数排序
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(k, (o1,o2)-> {
-                return map.get(o1).compareTo(map.get(o2));
-        });
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(k, Comparator.comparing(map::get));
         //将元素加入小顶堆
         for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
             if (priorityQueue.size() < k) {

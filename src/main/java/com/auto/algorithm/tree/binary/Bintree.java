@@ -156,12 +156,17 @@ public class Bintree<E extends Comparable<E>> implements BinaryTree<E> {
         return arrayList;
     }
 
-    @Override//显示这棵树的大小
+    /**
+     * 显示这棵树的大小
+     * @return
+     */
+    @Override
     public int getSize() {
         return size;
     }
 
     //先序遍历
+    @Override
     public void preorder() {
         preorder(root);
     }

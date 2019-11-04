@@ -13,12 +13,14 @@ import java.util.PriorityQueue;
 public class HeapTopK {
 
     public static int[] topK(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(k);//队列默认自然顺序排列,小顶堆,不必重写compare
+        //队列默认自然顺序排列,小顶堆,不必重写compare
+        PriorityQueue<Integer> pq = new PriorityQueue<>(k);
 
         for (int num : nums) {
             if (pq.size() < k) {
                 pq.offer(num);
-            } else if (pq.peek() < num) {//如果堆顶元素 < 新数,则删除堆顶,加入新数入堆
+                //如果堆顶元素 < 新数,则删除堆顶,加入新数入堆
+            } else if (pq.peek() < num) {
                 pq.poll();
                 pq.offer(num);
             }

@@ -35,23 +35,20 @@ public class WeightRandom<T> {
             Flector<T> flector = new Flector<T>(clazz);
             Integer weightSum = 00;
             //计算总权重
-            if (CollectionUtils.isEmpty(ts) || ((weightSum = ts.stream().mapToInt($t -> {
-                return flector.getter($t, weightColumns);
-            }).sum()) <= 0)) {
+            if (CollectionUtils.isEmpty(ts) || ((weightSum = ts.stream().mapToInt($t -> flector.getter($t, weightColumns)).sum()) <= 0)) {
                 return t;
             }
-            Integer m = 0;
             Integer weight = 0;
             //取值 n=[0,weightSum)
             Random random = new Random();
             Integer n = random.nextInt(weightSum);
             for (T tmp : ts) {
                 //先计算weight 权重值小的选重率越小，反之，权重值大的选重率越高
-                weight += (Integer) flector.getter(tmp, weightColumns);
+                weight += (int) flector.getter(tmp, weightColumns);
                 /*根据随机权重分区*/
-                if (n >= m && n < m + weight) {
+                if (n >= 0 && n < weight) {
                     t = tmp;
-                    break;
+                    return t;
                 }
             }
         } catch (Throwable e) {
@@ -116,7 +113,7 @@ public class WeightRandom<T> {
         MultiHashMap multiHashMap = new MultiHashMap();
 
         for (int i = 0; i < 10000; i++) {
-            RewardPrize weights = selector(prizes, RewardPrize.class, "weights");
+            RewardPrize weights = percentage(prizes, RewardPrize.class, "weights");
             multiHashMap.put(weights.getSupplierNo(), weights);
             System.out.println(weights);
         }

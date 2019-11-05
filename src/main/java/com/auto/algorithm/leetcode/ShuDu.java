@@ -1,4 +1,4 @@
-package com.auto.algorithm.shudu;
+package com.auto.algorithm.leetcode;
 
 /**
  * @author jsen.yin[jsen.yin@gmail.com]

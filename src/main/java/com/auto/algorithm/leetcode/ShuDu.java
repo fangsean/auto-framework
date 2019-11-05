@@ -5,7 +5,7 @@ package com.auto.algorithm.leetcode;
  * 2019-03-13
  * @Description: <p></p>
  */
-public class Solution {
+public class ShuDu {
 
     private boolean/*void*/ dfs(char[][] board, boolean[][] row, boolean[][] col, boolean[][] block, int i, int j) {
         while (board[i][j] != '.') {
@@ -88,10 +88,10 @@ public class Solution {
                 {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         };
 
-        Solution solution = new Solution();
-        solution.printSudoKu(board);
-        solution.solveSudoKu(board);
-        solution.printSudoKu(board);
+        ShuDu shuDu = new ShuDu();
+        shuDu.printSudoKu(board);
+        shuDu.solveSudoKu(board);
+        shuDu.printSudoKu(board);
 
     }
 

@@ -9,11 +9,6 @@ import java.util.List;
  * @author auto.yin[auto.yin@gmail.com]
  * 2018-10-18
  * @Description: <p></p>
- */
-
-/**
- * @author lhc
- * @date 2017年12月29日 下午5:14:20
  * 统计方法执行时间
  */
 public class JProfile {

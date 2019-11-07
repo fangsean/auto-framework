@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 @Slf4j
 public class UserDaoProxy implements IUserDao {
-
-    protected final static Logger log = LoggerFactory.getLogger(UserDaoProxy.class);
+//    protected final static Logger log = LoggerFactory.getLogger(UserDaoProxy.class);
 
     private IUserDao target;
 

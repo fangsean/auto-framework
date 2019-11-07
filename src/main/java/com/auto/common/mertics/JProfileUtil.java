@@ -1,17 +1,13 @@
 package com.auto.common.mertics;
 
-/**
- * @author auto.yin[auto.yin@gmail.com]
- * 2018-10-18
- * @Description: <p></p>
- */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author lhc
- * @date 2017年12月29日 下午5:14:20
+ * @author auto.yin[auto.yin@gmail.com]
+ * 2018-10-18
+ * @Description: <p></p>
  * 统计方法执行时间
  */
 public class JProfileUtil {

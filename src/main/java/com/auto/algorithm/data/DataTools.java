@@ -3,11 +3,13 @@ package com.auto.algorithm.data;
 import com.auto.entity.User;
 import com.auto.util.JsonUtils;
 import com.google.common.base.Splitter;
+import io.vavr.Tuple3;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author auto.yin[auto.yin@gmail.com]
@@ -132,7 +134,7 @@ public class DataTools {
      *
      * @param list     List beans
      * @param keyNames 数组包含需要归类的bean的属性名称
-     * @return 归类的有顺序的树状map,eg："key1#key2"
+     * @return 归类的有顺序的树状map, eg："key1#key2"
      * map的值为List或者map
      */
     public static LinkedHashMap groupClassifyList(List list, String... keyNames) {
@@ -293,7 +295,7 @@ public class DataTools {
     public static void main(String[] args) {
         // new LinkedListIntChecklistImpl()
         // 待处理信息
-        LinkedList<Object> objects = new LinkedList<>();
+        List<User> objects = new LinkedList<>();
         objects.add(User.builder().id(1L).tenantId(2L).age(1).name("什么").phone("1351234567890").role(12L).testDate(new Date()).testType(1).build());
         objects.add(User.builder().id(1L).tenantId(2L).age(1).name("什么").phone("1351234567890").role(12L).testDate(new Date()).testType(1).build());
         objects.add(User.builder().id(1L).tenantId(2L).age(2).name("撒子").phone("1351234567890").role(12L).testDate(new Date()).testType(1).build());
@@ -304,8 +306,37 @@ public class DataTools {
         objects.add(User.builder().id(1L).tenantId(2L).age(3).name("什么").phone("1351234567890").role(12L).testDate(new Date()).testType(2).build());
 
         // 最终分解的信息
-        LinkedList<Map> role = group(objects, 0, "id,tenantId,age,name,phone", "role", "testType,testDate");
+        LinkedList<Map> role = group(objects, 2, "id,tenantId,age,name,phone", "role", "testType,testDate");
         System.out.println(JsonUtils.toJson(role));
+
+        System.out.println("======================================");
+
+        Map<Integer, Map<String, List<User>>> collect = Optional.ofNullable(objects)
+                .orElse(Collections.emptyList())
+                .stream()
+                .sorted(Comparator.comparing(User::getAge).reversed())
+                .collect(Collectors.groupingBy(User::getTestType,
+                        Collectors.groupingBy(User::getName)));
+        System.out.println(JsonUtils.toJson(collect));
+
+        System.out.println("======================================");
+
+        Map<Integer, Map<String, List<Tuple3>>> collect1 =
+                Optional.ofNullable(objects)
+                        .orElse(Collections.emptyList())
+                        .stream()
+                        .sorted(Comparator.comparing(User::getAge).reversed())
+                        .collect(Collectors.groupingBy(User::getTestType,
+                                Collectors.groupingBy(User::getName,
+                                        Collectors.collectingAndThen(Collectors.toList(),
+                                                lists -> lists.stream().map(history ->
+                                                        new Tuple3(
+                                                                history.getName(),
+                                                                history.getPhone(),
+                                                                history.getTestDate())
+                                                ).collect(Collectors.toList())))));
+        System.out.println(JsonUtils.toJson(collect1));
+
     }
 
 

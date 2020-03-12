@@ -3,7 +3,7 @@ package com.auto.algorithm;
 /**
  * @Description: <p>配套算法</p>
  */
-public class SQA {
+public class QuickSort {
 
     /**
      * 快速排序

@@ -293,9 +293,9 @@ public class ParallelStream<T> {
 
     public static Recursions<Long> factorialTailRecursion(final long factorial, final long number) {
         if (number == 1)
-            return StackInvoke.call(factorial);
+            return StackInvoke.done(factorial);
         else
-            return factorialTailRecursion(factorial + number, number - 1);
+            return StackInvoke.call(()->factorialTailRecursion(factorial + number, number - 1));
     }
 
     @Test

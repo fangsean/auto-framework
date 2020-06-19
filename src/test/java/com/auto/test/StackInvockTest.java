@@ -37,7 +37,7 @@ public class StackInvockTest {
      */
     public static double factorialRecursion(final double number) {
         if (number == 1) return number;
-        else return number * factorialRecursion(number - 1);
+        else return number + factorialRecursion(number - 1);
     }
 
 
@@ -48,43 +48,22 @@ public class StackInvockTest {
      * @param number    下一个递归需要计算的值
      * @return 尾递归接口, 调用invoke启动及早求值获得结果
      */
-    public static Recursions<Long> factorialTailRecursion(final long factorial, final long number) {
-        if (number == 1) {
-            return StackInvoke.call(factorial);
-        } else {
-            return factorialTailRecursion(factorial * number, number - 1);
-        }
-    }
-
-    /**
-     * 阶乘计算 -- 尾递归解决
-     *
-     * @param factorial 上一轮递归保存的值
-     * @param number    当前阶乘需要计算的数值
-     * @return number!
-     */
-    public static int factorialRecursion(final int factorial, final int number) {
-        if (number == 1) {
-            return factorial;
-        } else {
-            return factorialRecursion(factorial * number, number - 1);
-        }
+    public static Recursions<Long> factorialRecursion(final long factorial, final long number) {
+        if (number == 1)
+            return StackInvoke.done(factorial);
+        else
+            return StackInvoke.call(() -> factorialRecursion(factorial + number, number - 1));
     }
 
 
     @Test
     public void testRec() {
-        System.out.println(factorialRecursion(10_000/*_000*/));
+        System.out.println(factorialRecursion(10_000_000));
     }
 
     @Test
     public void testTailRec() {
-        System.out.println(factorialRecursion(1, 20_000/*_000_00*/));
-    }
-
-    @Test
-    public void testTailRec1() {
-        System.out.println(factorialTailRecursion(1, 3/*0_000_000_00*/).invoke());
+        System.out.println(factorialRecursion(1, 30_000_000_00L/*_000_00*/).invoke());
     }
 
 }

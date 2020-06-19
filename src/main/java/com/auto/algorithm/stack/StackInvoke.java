@@ -25,8 +25,12 @@ package com.auto.algorithm.stack;
  */
 public class StackInvoke {
 
-    public static <T> Recursions<T> call(T value) {
-        return new Recursions<T>() {
+    public static <T> Recursions<T> call(final Recursions<T> nextFrame) {
+        return nextFrame;
+    }
+
+    public static <T> Recursions<T> done(T value) {
+        return new Recursions() {
             @Override
             public Recursions<T> apply() {
                 throw new Error("Recursion has ended, illegally apply method.");

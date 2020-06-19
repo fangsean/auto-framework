@@ -51,7 +51,7 @@ public class StackInvockTest {
     public static Recursions<Long> factorialTailRecursion(final long factorial, final long number) {
         if (number == 1) {
             return StackInvoke.call(factorial);
-        } else{
+        } else {
             return factorialTailRecursion(factorial * number, number - 1);
         }
     }

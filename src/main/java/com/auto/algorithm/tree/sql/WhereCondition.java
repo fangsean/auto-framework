@@ -601,7 +601,6 @@ public class WhereCondition {
      * @param args
      */
     public static void main(String[] args) {
-		/*
 		Field[] fields = {new Field("ID",Field.BigintType),new Field("Name",Field.VarcharType)};
 
 		int n = 3;
@@ -665,16 +664,13 @@ public class WhereCondition {
 			System.out.println(checkRecordByFields(oneRecord, fields, conditions, AndOrs));
 			System.out.println();
 		}
-		*/
 
-		/*
 		WhereCondition wc = WhereCondition.parseDDLString(" not ( name < = hao )   ");
 		if(wc==null){
 			System.out.println("格式错误！");
 		}else{
 			System.out.println(wc.toString());
 		}
-		*/
 
         ArrayList<Integer> AndOrsList = new ArrayList<Integer>(5);
         //WhereCondition[] wcs = WhereCondition.getWheresFromDDLString("where not ( name < = hao )  and id > 4 or sdf = 9 ", AndOrsList);

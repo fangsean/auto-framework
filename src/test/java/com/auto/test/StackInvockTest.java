@@ -18,8 +18,7 @@
 
 package com.auto.test;
 
-import com.auto.algorithm.stack.Recursions;
-import com.auto.algorithm.stack.StackInvoke;
+import com.auto.algorithm.stack.RecursiveWrapper;
 import org.junit.Test;
 
 /**
@@ -48,11 +47,11 @@ public class StackInvockTest {
      * @param number    下一个递归需要计算的值
      * @return 尾递归接口, 调用invoke启动及早求值获得结果
      */
-    public static Recursions<Long> factorialRecursion(final long factorial, final long number) {
+    public static RecursiveWrapper<Long> factorialRecursion(final long factorial, final long number) {
         if (number == 1)
-            return StackInvoke.done(factorial);
+            return RecursiveWrapper.done(factorial);
         else
-            return StackInvoke.call(() -> factorialRecursion(factorial + number, number - 1));
+            return RecursiveWrapper.call(() -> factorialRecursion(factorial + number, number - 1));
     }
 
 

@@ -18,21 +18,42 @@
 
 package com.auto.algorithm.stack;
 
+import java.util.stream.Stream;
+
 /**
  * @author jsen.yin[jsen.yin@gmail.com]
  * 2020-06-02
- * @Description: <p></p>
+ * @Description: <p>入栈递归算法调用通用包装类 避免max递归造成的StackOverflowError.</p>
  */
-public class StackInvoke {
+public interface RecursiveWrapper<T> {
 
-    public static <T> Recursions<T> call(final Recursions<T> nextFrame) {
+    RecursiveWrapper<T> apply();
+
+    default boolean isFinished() {
+        return false;
+    }
+
+    default T getResult() {
+        throw new Error("The recursion is not over yet, the result of the call is abnormal. ");
+    }
+
+    default T invoke() {
+        return Stream
+                .iterate(this, RecursiveWrapper::apply)
+                .filter(RecursiveWrapper::isFinished)
+                .findFirst()
+                .orElse(this)
+                .getResult();
+    }
+
+    static <T> RecursiveWrapper<T> call(final RecursiveWrapper<T> nextFrame) {
         return nextFrame;
     }
 
-    public static <T> Recursions<T> done(T value) {
-        return new Recursions() {
+    static <T> RecursiveWrapper<T> done(T value) {
+        return new RecursiveWrapper() {
             @Override
-            public Recursions<T> apply() {
+            public RecursiveWrapper<T> apply() {
                 throw new Error("Recursion has ended, illegally apply method.");
             }
 

@@ -18,8 +18,6 @@
 
 package com.auto.test.stream;
 
-import com.auto.algorithm.stack.Recursions;
-import com.auto.algorithm.stack.StackInvoke;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -290,13 +288,6 @@ public class ParallelStream<T> {
 
     }
 
-
-    public static Recursions<Long> factorialTailRecursion(final long factorial, final long number) {
-        if (number == 1)
-            return StackInvoke.done(factorial);
-        else
-            return StackInvoke.call(()->factorialTailRecursion(factorial + number, number - 1));
-    }
 
     @Test
     public void test3() {

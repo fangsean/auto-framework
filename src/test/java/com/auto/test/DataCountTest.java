@@ -67,5 +67,23 @@ public class DataCountTest {
 
     }
 
+    @Test
+    public void zhongweishu() {
+
+        int a = -20;
+        int b = 11;
+
+        int mid = a + (b - a) / 2;
+        int mid01 = a + (b - a + 1) / 2;
+
+        int mid1 = (a + b) >> 1;
+        int mid11 = (a + b + 1) >> 1;
+
+        System.out.println(mid);
+        System.out.println(mid01);
+        System.out.println(mid1);
+        System.out.println(mid11);
+
+    }
 
 }
